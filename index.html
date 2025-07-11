@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Password Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <h1>🔐 Password Generator</h1>
+          <p>Create secure passwords with custom settings</p>
+        </div>
+
+        <div class="password-display">
+          <input
+            type="text"
+            id="passwordOutput"
+            readonly
+            placeholder="Your password will appear here"
+          />
+          <button id="copyBtn" class="copy-btn">
+            <span class="copy-icon">📋</span>
+          </button>
+        </div>
+
+        <div class="settings">
+          <div class="setting-group">
+            <label for="passwordLength">Password Length</label>
+            <div class="length-control">
+              <input
+                type="range"
+                id="passwordLength"
+                min="4"
+                max="50"
+                value="12"
+              />
+              <span id="lengthValue">12</span>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <label>Character Types</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" id="uppercase" checked />
+                <span class="checkmark"></span>
+                <span>Uppercase (A-Z)</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="lowercase" checked />
+                <span class="checkmark"></span>
+                <span>Lowercase (a-z)</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="numbers" />
+                <span class="checkmark"></span>
+                <span>Numbers (0-9)</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="symbols" />
+                <span class="checkmark"></span>
+                <span>Symbols (!@#$%^&*)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <label for="symbolCount">Number of Symbols</label>
+            <div class="count-control">
+              <input
+                type="number"
+                id="symbolCount"
+                min="0"
+                max="10"
+                value="2"
+              />
+              <span class="hint">(0-10 symbols)</span>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <label for="numberCount">Number of Numbers</label>
+            <div class="count-control">
+              <input
+                type="number"
+                id="numberCount"
+                min="0"
+                max="10"
+                value="3"
+              />
+              <span class="hint">(0-10 numbers)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="generateBtn" class="generate-btn">
+            <span class="btn-icon">⚡</span>
+            Generate Password
+          </button>
+          <button id="refreshBtn" class="refresh-btn">
+            <span class="btn-icon">🔄</span>
+            Refresh
+          </button>
+        </div>
+
+        <div class="strength-meter">
+          <label>Password Strength:</label>
+          <div class="strength-bar">
+            <div id="strengthFill" class="strength-fill"></div>
+          </div>
+          <span id="strengthText">Medium</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
