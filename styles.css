@@ -156,48 +156,136 @@ body {
   text-align: center;
 }
 
+/* Enhanced styling for password type selection buttons */
 .checkbox-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 12px;
 }
 
 .checkbox-item {
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 12px 16px;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  background: #f8f9fa;
-  border: 2px solid transparent;
+  padding: 16px 20px;
+  border-radius: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+  min-height: 58px;
+}
+
+.checkbox-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
 }
 
 .checkbox-item:hover {
-  background: rgba(102, 126, 234, 0.08);
-  border-color: rgba(102, 126, 234, 0.2);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+}
+
+.checkbox-item:hover::before {
+  opacity: 1;
 }
 
 .checkbox-item input[type="checkbox"] {
   display: none;
 }
 
+.checkmark {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  margin-right: 12px;
+  position: relative;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.checkbox-item input[type="checkbox"]:checked ~ .checkmark {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.checkbox-item input[type="checkbox"]:checked ~ .checkmark::after {
+  transform: translate(-50%, -60%) rotate(45deg) scale(1);
+}
+
 .checkbox-item span:last-child {
-  font-size: 1rem;
-  color: #6b7280;
+  font-size: 0.95rem;
+  color: #475569;
   font-weight: 500;
   transition: all 0.3s ease;
+  z-index: 1;
 }
 
 .checkbox-item input[type="checkbox"]:checked ~ span:last-child {
-  color: #667eea;
+  color: #1e293b;
   font-weight: 600;
-  background: rgba(102, 126, 234, 0.1);
-  padding: 8px 12px;
-  border-radius: 8px;
-  margin: -8px -12px;
+}
+
+/* Selected state styling */
+.checkbox-item input[type="checkbox"]:checked {
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.checkbox-item:has(input[type="checkbox"]:checked) {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.08) 0%,
+    rgba(118, 75, 162, 0.08) 100%
+  );
+  border-color: #667eea;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.checkbox-item:has(input[type="checkbox"]:checked)::before {
+  opacity: 1;
+}
+
+/* Active/pressed state */
+.checkbox-item:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+/* Focus styles for accessibility */
+.checkbox-item:focus-within {
+  outline: 2px solid #764ba2;
+  outline-offset: 2px;
 }
 
 .count-control {
@@ -346,6 +434,48 @@ body {
   color: #4ecdc4;
 }
 
+/* Animation for copy button */
+.copy-btn.copied {
+  background: #6bcf7f;
+  animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.1);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+/* Animation for smooth interactions */
+@keyframes checkmarkPop {
+  0% {
+    transform: translate(-50%, -60%) rotate(45deg) scale(0);
+  }
+  80% {
+    transform: translate(-50%, -60%) rotate(45deg) scale(1.1);
+  }
+  100% {
+    transform: translate(-50%, -60%) rotate(45deg) scale(1);
+  }
+}
+
+.checkbox-item input[type="checkbox"]:checked ~ .checkmark::after {
+  animation: checkmarkPop 0.3s ease;
+}
+
+/* Focus styles for accessibility */
+button:focus,
+input:focus {
+  outline: 2px solid #764ba2;
+  outline-offset: 4px;
+}
+
 /* Responsive Design */
 @media (max-width: 600px) {
   .card {
@@ -373,27 +503,19 @@ body {
   #strengthText {
     text-align: left;
   }
-}
 
-/* Animation for copy button */
-.copy-btn.copied {
-  background: #6bcf7f;
-  animation: pulse 0.6s ease;
-}
+  .checkbox-item {
+    padding: 14px 18px;
+    min-height: 54px;
+  }
 
-@keyframes pulse {
-  0% {
-    transform: translateY(-50%) scale(1);
+  .checkmark {
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
   }
-  50% {
-    transform: translateY(-50%) scale(1.1);
-  }
-  100% {
-    transform: translateY(-50%) scale(1);
-  }
-}
 
-button:focus, input:focus {
-  outline: 2px solid #764ba2;
-  outline-offset: 4px;
+  .checkbox-item span:last-child {
+    font-size: 0.9rem;
+  }
 }
